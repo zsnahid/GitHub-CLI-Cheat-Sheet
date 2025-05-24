@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GitHub CLI Cheat Sheet</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@400&display=swap');
         
         * {
             margin: 0;
@@ -15,116 +15,170 @@
         
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding: 1.5rem;
+            background: #fafafa;
+            padding: 1rem;
             color: #333;
-            font-size: 14px;
+            font-size: 13px;
         }
         
         .container {
-            max-width: 1400px;
+            max-width: 1920px;
             margin: 0 auto;
             background: white;
-            border-radius: 16px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
-            overflow: hidden;
+            border: 1px solid #e5e5e5;
+            display: flex;
+            flex-direction: column;
         }
         
-        .header {
-            background: linear-gradient(135deg, #24292e 0%, #1a1e22 100%);
+        .top-section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #24292e;
             color: white;
-            padding: 2rem;
-            text-align: center;
+            padding: 1rem 1.5rem;
+            flex-shrink: 0;
+        }
+        
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .github-logo {
+            color: white;
+            flex-shrink: 0;
+        }
+        
+        .header-text {
+            display: flex;
+            flex-direction: column;
         }
         
         .header h1 {
-            font-size: 2.5rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin-bottom: 0.25rem;
         }
         
         .header p {
-            font-size: 1rem;
+            font-size: 0.875rem;
+            opacity: 0.8;
+        }
+        
+        .auth-section {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 6px;
+            padding: 1rem;
+            min-width: 280px;
+        }
+        
+        .auth-section h2 {
+            color: white;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 0.75rem;
             opacity: 0.9;
         }
         
+        .auth-commands {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .auth-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .auth-command {
+            font-family: 'JetBrains Mono', monospace;
+            background: rgba(255,255,255,0.15);
+            color: #58a6ff;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            min-width: 100px;
+        }
+        
+        .auth-command::before {
+            content: '$ ';
+            color: #7c3aed;
+            font-weight: bold;
+        }
+        
+        .auth-desc {
+            color: rgba(255,255,255,0.8);
+            font-size: 0.75rem;
+        }
+        
         .content {
-            padding: 2rem;
+            flex: 1;
+            padding: 1.5rem;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 1.5rem;
         }
         
         .section {
+            display: flex;
+            flex-direction: column;
             background: #f8f9fa;
-            border-radius: 12px;
-            padding: 1.5rem;
+            border-radius: 8px;
+            padding: 1rem;
         }
         
         .section h2 {
             color: #24292e;
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .section h2::before {
-            content: '▶';
-            color: #0366d6;
-            font-size: 0.9rem;
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-        }
-        
-        th {
-            background: #24292e;
-            color: white;
-            padding: 0.75rem 1rem;
-            text-align: left;
+            font-size: 1rem;
             font-weight: 500;
-            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e5e5e5;
         }
         
-        th:first-child {
-            width: 50%;
+        .commands-table {
+            flex: 1;
         }
         
-        td {
-            padding: 0.75rem 1rem;
-            border-bottom: 1px solid #e1e4e8;
-            vertical-align: top;
+        .command-row {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid #e5e5e5;
+            align-items: flex-start;
         }
         
-        tr:last-child td {
+        .command-row:last-child {
             border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
         }
         
-        tr:hover {
-            background: #f6f8fa;
+        .commands-table {
+            flex: 1;
+        }
+        
+        .commands-table .command-cell {
+            width: 250px;
         }
         
         .command-cell {
             font-family: 'JetBrains Mono', monospace;
             background: #24292e;
             color: #58a6ff;
-            padding: 0.5rem 0.75rem;
-            border-radius: 6px;
-            font-size: 0.85rem;
+            padding: 0.375rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
             position: relative;
             display: inline-block;
-            min-width: 100%;
-            box-sizing: border-box;
+            width: 250px;
+            white-space: nowrap;
         }
         
         .command-cell::before {
@@ -135,344 +189,246 @@
         
         .desc-cell {
             color: #586069;
-            line-height: 1.4;
-            font-size: 0.9rem;
+            line-height: 1.3;
+            font-size: 0.8125rem;
+            flex: 1;
         }
         
-        .highlight {
-            color: #0366d6;
-            font-weight: 500;
-        }
-        
-        .auth-section h2::before {
-            color: #28a745;
-        }
-        
-        .pr-section h2::before {
-            color: #6f42c1;
-        }
-        
-        .issues-section h2::before {
-            color: #d73a49;
-        }
-        
-        .workflow-section h2::before {
-            color: #f66a0a;
-        }
-        
-        .release-section h2::before {
-            color: #6f42c1;
-        }
-        
-        .flags-section h2::before {
-            color: #586069;
-        }
+        .repo-section h2 { border-bottom-color: #0969da; }
+        .pr-section h2 { border-bottom-color: #8250df; }
+        .issues-section h2 { border-bottom-color: #cf222e; }
+        .workflow-section h2 { border-bottom-color: #fb8500; }
+        .release-section h2 { border-bottom-color: #8250df; }
+        .flags-section h2 { border-bottom-color: #656d76; }
         
         .footer {
             background: #f6f8fa;
-            padding: 1.5rem;
+            padding: 0.75rem 1.5rem;
             text-align: center;
-            color: #586069;
-            border-top: 1px solid #e1e4e8;
-            font-size: 0.9rem;
+            color: #656d76;
+            border-top: 1px solid #e5e5e5;
+            font-size: 0.75rem;
+            flex-shrink: 0;
         }
-        
-        @media (max-width: 1000px) {
+
+        /* Responsive adjustments for smaller screens */
+        @media (max-width: 1200px) {
             .content {
-                grid-template-columns: 1fr;
+                grid-template-columns: repeat(2, 1fr);
             }
         }
         
         @media (max-width: 768px) {
-            body {
-                padding: 1rem;
-            }
-            
-            .header h1 {
-                font-size: 2rem;
-            }
-            
             .content {
-                padding: 1.5rem;
+                grid-template-columns: 1fr;
             }
             
-            .section {
-                padding: 1rem;
-            }
-            
-            th:first-child {
-                width: 55%;
-            }
-            
-            .command-cell {
-                font-size: 0.8rem;
-                padding: 0.4rem 0.6rem;
-            }
-        }
-        
-        @media print {
-            body {
-                background: white;
-                padding: 0;
-            }
-            
-            .container {
-                box-shadow: none;
-            }
-            
-            .content {
-                grid-template-columns: repeat(2, 1fr);
+            .top-section {
+                flex-direction: column;
                 gap: 1rem;
+                align-items: stretch;
             }
             
-            .section {
-                break-inside: avoid;
-                margin-bottom: 1rem;
+            .auth-section {
+                min-width: auto;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>GitHub CLI Cheat Sheet</h1>
-            <p>Quick reference for essential GitHub CLI commands</p>
+        <div class="top-section">
+            <div class="header">
+                <div class="header-content">
+                    <svg class="github-logo" width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                    <div class="header-text">
+                        <h1>GitHub CLI Cheat Sheet</h1>
+                        <p>Quick reference for essential GitHub CLI commands</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="auth-section">
+                <h2>Authentication</h2>
+                <div class="auth-commands">
+                    <div class="auth-item">
+                        <div class="auth-command">gh auth login</div>
+                        <div class="auth-desc">Authenticate with GitHub</div>
+                    </div>
+                    <div class="auth-item">
+                        <div class="auth-command">gh auth status</div>
+                        <div class="auth-desc">Check authentication status</div>
+                    </div>
+                    <div class="auth-item">
+                        <div class="auth-command">gh auth logout</div>
+                        <div class="auth-desc">Sign out of GitHub</div>
+                    </div>
+                </div>
+            </div>
         </div>
         
         <div class="content">
-            <div class="section auth-section">
-                <h2>Authentication</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Command</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><div class="command-cell">gh auth login</div></td>
-                            <td class="desc-cell">Authenticate with GitHub</td>
-                        </tr>
-                        <tr>
-                            <td><div class="command-cell">gh auth status</div></td>
-                            <td class="desc-cell">Check authentication status</td>
-                        </tr>
-                        <tr>
-                            <td><div class="command-cell">gh auth logout</div></td>
-                            <td class="desc-cell">Sign out of GitHub</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            
-            <div class="section">
+            <div class="section repo-section">
                 <h2>Repository Management</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Command</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><div class="command-cell">gh repo create [name]</div></td>
-                            <td class="desc-cell">Create new repository</td>
-                        </tr>
-                        <tr>
-                            <td><div class="command-cell">gh repo clone [owner/repo]</div></td>
-                            <td class="desc-cell">Clone repository</td>
-                        </tr>
-                        <tr>
-                            <td><div class="command-cell">gh repo view [owner/repo]</div></td>
-                            <td class="desc-cell">View repository details</td>
-                        </tr>
-                        <tr>
-                            <td><div class="command-cell">gh repo fork [owner/repo]</div></td>
-                            <td class="desc-cell">Fork repository</td>
-                        </tr>
-                        <tr>
-                            <td><div class="command-cell">gh repo list</div></td>
-                            <td class="desc-cell">List your repositories</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="commands-table">
+                    <div class="command-row">
+                        <div class="command-cell">gh repo create [name]</div>
+                        <div class="desc-cell">Create new repository</div>
+                    </div>
+                    <div class="command-row">
+                        <div class="command-cell">gh repo clone [owner/repo]</div>
+                        <div class="desc-cell">Clone repository</div>
+                    </div>
+                    <div class="command-row">
+                        <div class="command-cell">gh repo view [owner/repo]</div>
+                        <div class="desc-cell">View repository details</div>
+                    </div>
+                    <div class="command-row">
+                        <div class="command-cell">gh repo fork [owner/repo]</div>
+                        <div class="desc-cell">Fork repository</div>
+                    </div>
+                    <div class="command-row">
+                        <div class="command-cell">gh repo list</div>
+                        <div class="desc-cell">List your repositories</div>
+                    </div>
+                </div>
             </div>
             
             <div class="section pr-section">
                 <h2>Pull Requests</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Command</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><div class="command-cell">gh pr create</div></td>
-                            <td class="desc-cell">Create pull request</td>
-                        </tr>
-                        <tr>
-                            <td><div class="command-cell">gh pr list</div></td>
-                            <td class="desc-cell">List pull requests</td>
-                        </tr>
-                        <tr>
-                            <td><div class="command-cell">gh pr view [number]</div></td>
-                            <td class="desc-cell">View specific PR</td>
-                        </tr>
-                        <tr>
-                            <td><div class="command-cell">gh pr checkout [number]</div></td>
-                            <td class="desc-cell">Checkout PR locally</td>
-                        </tr>
-                        <tr>
-                            <td><div class="command-cell">gh pr merge [number]</div></td>
-                            <td class="desc-cell">Merge pull request</td>
-                        </tr>
-                        <tr>
-                            <td><div class="command-cell">gh pr review [number]</div></td>
-                            <td class="desc-cell">Review pull request</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="commands-table">
+                    <div class="command-row">
+                        <div class="command-cell">gh pr create</div>
+                        <div class="desc-cell">Create pull request</div>
+                    </div>
+                    <div class="command-row">
+                        <div class="command-cell">gh pr list</div>
+                        <div class="desc-cell">List pull requests</div>
+                    </div>
+                    <div class="command-row">
+                        <div class="command-cell">gh pr view [number]</div>
+                        <div class="desc-cell">View specific PR</div>
+                    </div>
+                    <div class="command-row">
+                        <div class="command-cell">gh pr checkout [number]</div>
+                        <div class="desc-cell">Checkout PR locally</div>
+                    </div>
+                    <div class="command-row">
+                        <div class="command-cell">gh pr merge [number]</div>
+                        <div class="desc-cell">Merge pull request</div>
+                    </div>
+                    <div class="command-row">
+                        <div class="command-cell">gh pr review [number]</div>
+                        <div class="desc-cell">Review pull request</div>
+                    </div>
+                </div>
             </div>
             
             <div class="section issues-section">
                 <h2>Issues</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Command</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><div class="command-cell">gh issue create</div></td>
-                            <td class="desc-cell">Create new issue</td>
-                        </tr>
-                        <tr>
-                            <td><div class="command-cell">gh issue list</div></td>
-                            <td class="desc-cell">List issues</td>
-                        </tr>
-                        <tr>
-                            <td><div class="command-cell">gh issue view [number]</div></td>
-                            <td class="desc-cell">View specific issue</td>
-                        </tr>
-                        <tr>
-                            <td><div class="command-cell">gh issue close [number]</div></td>
-                            <td class="desc-cell">Close issue</td>
-                        </tr>
-                        <tr>
-                            <td><div class="command-cell">gh issue reopen [number]</div></td>
-                            <td class="desc-cell">Reopen closed issue</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="commands-table">
+                    <div class="command-row">
+                        <div class="command-cell">gh issue create</div>
+                        <div class="desc-cell">Create new issue</div>
+                    </div>
+                    <div class="command-row">
+                        <div class="command-cell">gh issue list</div>
+                        <div class="desc-cell">List issues</div>
+                    </div>
+                    <div class="command-row">
+                        <div class="command-cell">gh issue view [number]</div>
+                        <div class="desc-cell">View specific issue</div>
+                    </div>
+                    <div class="command-row">
+                        <div class="command-cell">gh issue close [number]</div>
+                        <div class="desc-cell">Close issue</div>
+                    </div>
+                    <div class="command-row">
+                        <div class="command-cell">gh issue reopen [number]</div>
+                        <div class="desc-cell">Reopen closed issue</div>
+                    </div>
+                </div>
             </div>
             
             <div class="section workflow-section">
                 <h2>Workflows & Actions</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Command</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><div class="command-cell">gh workflow list</div></td>
-                            <td class="desc-cell">List workflows</td>
-                        </tr>
-                        <tr>
-                            <td><div class="command-cell">gh workflow run [workflow]</div></td>
-                            <td class="desc-cell">Run workflow</td>
-                        </tr>
-                        <tr>
-                            <td><div class="command-cell">gh run list</div></td>
-                            <td class="desc-cell">List workflow runs</td>
-                        </tr>
-                        <tr>
-                            <td><div class="command-cell">gh run view [run-id]</div></td>
-                            <td class="desc-cell">View run details</td>
-                        </tr>
-                        <tr>
-                            <td><div class="command-cell">gh run watch [run-id]</div></td>
-                            <td class="desc-cell">Watch workflow run</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="commands-table">
+                    <div class="command-row">
+                        <div class="command-cell">gh workflow list</div>
+                        <div class="desc-cell">List workflows</div>
+                    </div>
+                    <div class="command-row">
+                        <div class="command-cell">gh workflow run [workflow]</div>
+                        <div class="desc-cell">Run workflow</div>
+                    </div>
+                    <div class="command-row">
+                        <div class="command-cell">gh run list</div>
+                        <div class="desc-cell">List workflow runs</div>
+                    </div>
+                    <div class="command-row">
+                        <div class="command-cell">gh run view [run-id]</div>
+                        <div class="desc-cell">View run details</div>
+                    </div>
+                    <div class="command-row">
+                        <div class="command-cell">gh run watch [run-id]</div>
+                        <div class="desc-cell">Watch workflow run</div>
+                    </div>
+                </div>
             </div>
             
             <div class="section release-section">
                 <h2>Releases</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Command</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><div class="command-cell">gh release create [tag]</div></td>
-                            <td class="desc-cell">Create new release</td>
-                        </tr>
-                        <tr>
-                            <td><div class="command-cell">gh release list</div></td>
-                            <td class="desc-cell">List releases</td>
-                        </tr>
-                        <tr>
-                            <td><div class="command-cell">gh release view [tag]</div></td>
-                            <td class="desc-cell">View release details</td>
-                        </tr>
-                        <tr>
-                            <td><div class="command-cell">gh release download [tag]</div></td>
-                            <td class="desc-cell">Download release assets</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="commands-table">
+                    <div class="command-row">
+                        <div class="command-cell">gh release create [tag]</div>
+                        <div class="desc-cell">Create new release</div>
+                    </div>
+                    <div class="command-row">
+                        <div class="command-cell">gh release list</div>
+                        <div class="desc-cell">List releases</div>
+                    </div>
+                    <div class="command-row">
+                        <div class="command-cell">gh release view [tag]</div>
+                        <div class="desc-cell">View release details</div>
+                    </div>
+                    <div class="command-row">
+                        <div class="command-cell">gh release download [tag]</div>
+                        <div class="desc-cell">Download release assets</div>
+                    </div>
+                </div>
             </div>
             
             <div class="section flags-section">
                 <h2>Common Flags</h2>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Flag</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td><div class="command-cell">--help</div></td>
-                            <td class="desc-cell">Show command help</td>
-                        </tr>
-                        <tr>
-                            <td><div class="command-cell">--json</div></td>
-                            <td class="desc-cell">Output in JSON format</td>
-                        </tr>
-                        <tr>
-                            <td><div class="command-cell">--web</div></td>
-                            <td class="desc-cell">Open in web browser</td>
-                        </tr>
-                        <tr>
-                            <td><div class="command-cell">--repo [owner/repo]</div></td>
-                            <td class="desc-cell">Specify repository</td>
-                        </tr>
-                        <tr>
-                            <td><div class="command-cell">--state [open|closed]</div></td>
-                            <td class="desc-cell">Filter by state</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="commands-table">
+                    <div class="command-row">
+                        <div class="command-cell">--help</div>
+                        <div class="desc-cell">Show command help</div>
+                    </div>
+                    <div class="command-row">
+                        <div class="command-cell">--json</div>
+                        <div class="desc-cell">Output in JSON format</div>
+                    </div>
+                    <div class="command-row">
+                        <div class="command-cell">--web</div>
+                        <div class="desc-cell">Open in web browser</div>
+                    </div>
+                    <div class="command-row">
+                        <div class="command-cell">--repo [owner/repo]</div>
+                        <div class="desc-cell">Specify repository</div>
+                    </div>
+                    <div class="command-row">
+                        <div class="command-cell">--state [open|closed]</div>
+                        <div class="desc-cell">Filter by state</div>
+                    </div>
+                </div>
             </div>
         </div>
         
         <div class="footer">
-            <p>For more information: <strong>cli.github.com</strong> • <code>gh --help</code></p>
+            For more information: <strong>cli.github.com</strong> • <code>gh --help</code>
         </div>
     </div>
 </body>
